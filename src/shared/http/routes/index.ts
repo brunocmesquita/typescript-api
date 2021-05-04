@@ -5,8 +5,4 @@ const routes = Router();
 
 routes.use('/products', productsRouter);
 
-routes.get('/', (req, res) => {
-  res.json({ message: 'Hello dev!' });
-});
-
 export default routes;
