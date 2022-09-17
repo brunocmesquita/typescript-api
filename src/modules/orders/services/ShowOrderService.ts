@@ -11,10 +11,10 @@ class ShowOrderService {
   public async execute({ id }: IRequest): Promise<Order> {
     const ordersRepository = getCustomRepository(OrdersRepository);
 
-    const order = await ordersRepository.findById(id)
+    const order = await ordersRepository.findById(id);
 
-    if(!order) {
-      throw new AppError(`Order with id ${id} not found`)
+    if (!order) {
+      throw new AppError(`Order with id ${id} not found`);
     }
 
     return order;

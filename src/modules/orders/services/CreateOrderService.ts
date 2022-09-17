@@ -32,20 +32,14 @@ class CreateOrderService {
     }
 
     const existsProductsIds = existsProducts.map(product => product.id);
-    const checkInexistentProducts = products.filter(
-      product => !existsProductsIds.includes(product.id),
-    );
+    const checkInexistentProducts = products.filter(product => !existsProductsIds.includes(product.id));
 
     if (checkInexistentProducts.length) {
-      throw new AppError(
-        `Could not find product ${checkInexistentProducts[0].id}`,
-      );
+      throw new AppError(`Could not find product ${checkInexistentProducts[0].id}`);
     }
 
     const quantityAvailable = products.filter(
-      product =>
-        existsProducts.filter(p => p.id === product.id)[0].quantity <
-        product.quantity,
+      product => existsProducts.filter(p => p.id === product.id)[0].quantity < product.quantity,
     );
 
     if (quantityAvailable.length) {
@@ -68,9 +62,7 @@ class CreateOrderService {
     const { order_products } = order;
     const updatedProductQuantity = order_products.map(product => ({
       id: product.product_id,
-      quantity:
-        existsProducts.filter(p => p.id === product.product_id)[0].quantity -
-        product.quantity,
+      quantity: existsProducts.filter(p => p.id === product.product_id)[0].quantity - product.quantity,
     }));
 
     await productsRepository.save(updatedProductQuantity);
