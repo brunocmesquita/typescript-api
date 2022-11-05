@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-
-import CreateCustomerService from '../services/CreateCustomerService';
-import DeleteCustomerService from '../services/DeleteCustomerService';
-import ListCustomerService from '../services/ListCustomerService';
-import ShowCustomerService from '../services/ShowCustomerService';
-import UpdateCustomerService from '../services/UpdateCustomerService';
+import { Request, Response } from "express";
+import CreateCustomerService from "../services/CreateCustomerService";
+import DeleteCustomerService from "../services/DeleteCustomerService";
+import ListCustomerService from "../services/ListCustomerService";
+import ShowCustomerService from "../services/ShowCustomerService";
+import UpdateCustomerService from "../services/UpdateCustomerService";
 
 export default class CustomersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -13,6 +12,14 @@ export default class CustomersController {
     const customers = await listCustomers.execute();
 
     return response.json(customers);
+  }
+
+  public async getCustomer(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+    const getCustomer = new ShowCustomerService();
+    const customer = await getCustomer.execute({ id });
+
+    return response.json(customer);
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -30,7 +37,7 @@ export default class CustomersController {
 
     const customer = await createCustomer.execute({
       name,
-      email,
+      email
     });
 
     return response.json(customer);
@@ -45,7 +52,7 @@ export default class CustomersController {
     const customer = await updateCustomer.execute({
       id,
       name,
-      email,
+      email
     });
 
     return response.json(customer);
