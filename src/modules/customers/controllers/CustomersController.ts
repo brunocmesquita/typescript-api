@@ -20,6 +20,8 @@ export default class CustomersController {
     const customer = await showCustomer.execute({ id });
 
     return response.json(customer);
+    console.log(customer)
+    console.log('Another log')
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
